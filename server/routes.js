@@ -1,8 +1,9 @@
 'use strict';
 
-var index    = require( './controllers/index' );
 var user     = require( './controllers/user' );
 var session  = require( './controllers/session' );
+
+
 
 // Application routes
 
@@ -34,6 +35,7 @@ module.exports = function( app )
 
 	app.post( '/api/user/session', session.loginUser );
 	app.delete( '/api/user/session', session.logout );
+
 
 
 	// Registration and login.

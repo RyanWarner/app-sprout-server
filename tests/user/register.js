@@ -9,7 +9,6 @@ var testUtils = require( '../utils' );
 
 describe( 'User Register', function(  )
 {
-	console.log( 'TEst' );
 	var api;
 	var server;
 	var User;
@@ -48,7 +47,7 @@ describe( 'User Register', function(  )
 
 	before( function( done )
 	{
-		console.log( 'clear db' );
+		console.log( 'Clear database.' );
 
 		testUtils.resetDatabase(  ).then( function(  )
 		{

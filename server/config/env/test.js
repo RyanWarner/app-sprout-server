@@ -6,6 +6,6 @@ module.exports =
 	secureSessionCookie: false,
 	mongo:
 	{
-		uri: 'mongodb://localhost/stranger-test'
+		uri: 'mongodb://localhost/node-seed-test'
 	}
 };

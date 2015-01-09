@@ -1,8 +1,7 @@
 'use strict';
 
-var mongoose = require( 'mongoose' );
-
-var crypto = require( 'crypto' );
+var mongoose      = require( 'mongoose' );
+var crypto        = require( 'crypto' );
 var URLSafeBase64 = require( 'urlsafe-base64' );
 
 
@@ -75,7 +74,7 @@ exports.makeSalt = makeSalt;
 
 
 //
-//  Encrypt password
+// Encrypt password
 //
 // @param {String} password
 // @return {String}

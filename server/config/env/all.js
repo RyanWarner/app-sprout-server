@@ -11,7 +11,7 @@ module.exports =
 {
 	root: rootPath,
 	port: process.env.PORT,
-	hostname: process.env.MAIN_STREET_HOST,
+	hostname: process.env.NODE_HOST,
 	sessionSecret: process.env.SESSION_SECRET,
 
 	baseUrl: function( )
@@ -26,7 +26,7 @@ module.exports =
 
 	mongo:
 	{
-		uri: 'mongodb://localhost/stranger-dev',
+		uri: 'mongodb://localhost/node-seed-dev',
 		options:
 		{
 			db:

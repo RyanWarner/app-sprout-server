@@ -1,63 +1,58 @@
 'use strict';
 
-var mongoose = require( 'mongoose' );
-var User = mongoose.model( 'User' );
-
-var passport = require( 'passport' );
-
+var mongoose      = require( 'mongoose' );
+var User          = mongoose.model( 'User' );
+var passport      = require( 'passport' );
 var LocalStrategy = require( 'passport-local' ).Strategy;
-
-var config = require( './config' );
-
-var utilities = require( '../utilities/utilities' );
-
-var urlPrefix = config.hostname;
+var config        = require( './config' );
+var utilities     = require( '../utilities/utilities' );
+var urlPrefix     = config.hostname;
 
 
 // Passport configuration
 
 passport.serializeUser( function( user, done )
 {
-	var jsonObject = { id:user._id };
+	var jsonObject =
+	{
+		id: user._id
+	};
+
 	done( null, JSON.stringify( jsonObject ) );
 } );
 
 passport.deserializeUser( function( userJsonString, done )
 {
 	var jsonObject = JSON.parse( userJsonString );
-	if( jsonObject.kind === 'User' )
+
+	User.findOne( {
+
+		'users._id': jsonObject.id
+	},
+	'-salt -hashedPassword', // don't ever give out the password or salt.
+	function( err, user )
 	{
-		User.findOne( {
-
-			'users._id': jsonObject.id
-		},
-		'-salt -hashedPassword', // don't ever give out the password or salt,
-		function( err, user )
+		if( ! user )
 		{
-			if( user )
-			{
-				user = merchant.users.id( jsonObject.id );
-			}
+			console.log( 'Invalid user session.' );
+			done( null, false );
+			return;
+		}
 
-			if( ! user )
-			{
-				console.log( 'invalid user session' );
-				done( null, false );
-				return;
-			}
-
-			done( err, user );
-		} );
-	}
-
+		done( err, user );
+	} );
 } );
 
-//
-//	 (((((((------- Local User Strategy ---------)))))))
-//
-var localStrategyOptions = {
+
+
+//-------------------------+
+//   Local User Strategy   |
+//-------------------------+
+
+var localStrategyOptions =
+{
 	usernameField: 'email',
-	passwordField: 'password' // this is the virtual field on the model
+	passwordField: 'password' // This is the virtual field on the model.
 };
 
 var localUserStrategyCallback = function( email, password, done )
