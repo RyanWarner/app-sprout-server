@@ -1,4 +1,4 @@
-# node-mong0-login-seed
+# node-mongo-login-seed
 
 
 ## Stack
