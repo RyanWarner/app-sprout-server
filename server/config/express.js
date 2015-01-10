@@ -54,7 +54,7 @@ module.exports = function( app )
 
 	app.use( session(
 	{
-		secret: '2av8dfeb-23dc-11f9-s5b4-52uia916433e',
+		secret: config.sessionSecret,
 		saveUninitialized: true,
 		resave: true
 	} ) );

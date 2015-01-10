@@ -1,7 +1,4 @@
-# 20ds-server
-
-Backend for 20 Day Stranger
-
+# node-mong0-login-seed
 
 
 ## Stack
@@ -18,6 +15,10 @@ Backend for 20 Day Stranger
 
 1. [Homebrew](http://brew.sh/)
 	- `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+	- `brew update`
+	- `brew doctor`
+	- `open ~./bash_profile`
+	- Add `export PATH="/usr/local/bin:$PATH"` to your bash profile and save it.
 1. [NodeJS](http://nodejs.org/)
 	- `brew install node`
 1. [Gulp](http://gulp.com/)
@@ -26,8 +27,10 @@ Backend for 20 Day Stranger
 	- `brew install mongodb`
 
 ### Start Up
-1. Set ENV variables.
-	- NODE_ENV = development
+1. Set environment variables. Open your bash profile and set:
+	- `export NODE_ENV="development"`
+	- `export SESSION_SECRET=“anything”`
+	- `export NODE_HOST="YOUR_MAC.local:9000"` where `YOUR_MAC` is equal to your computer name as defined in System Preferences >> Sharing >> Computer Name.
 1. `npm install`
 1. `gulp`
 
