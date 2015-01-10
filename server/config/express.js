@@ -7,6 +7,7 @@ var path         = require( 'path' );
 var errorhandler = require( 'errorhandler' );
 var bodyParser   = require( 'body-parser' );
 var passport     = require( 'passport' );
+var config       = require( './config' );
 
 
 var rootPath = path.normalize( path.join( __dirname, '/../..' ) );

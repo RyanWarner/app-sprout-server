@@ -17,7 +17,7 @@
     "body-parser": "~1.9.0"
   },
   "devDependencies": {
-    "gulp": "~3.8.8",
+    "gulp": "~3.8.10",
     "should": "~4.0.4",
     "supertest": "~0.14.0",
     "gulp-nodemon": "~1.0.4",

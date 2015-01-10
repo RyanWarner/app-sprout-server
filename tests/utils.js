@@ -77,9 +77,10 @@ exports.registerUser = function( api, emailAddress, password, expectedStatusCode
 
 	var promise = new mongoose.Promise(  );
 
-	api.post( '/api/user/register' )
-	.send(
-	{
+	api
+	.post( '/api/user/register' )
+	.send
+	( {
 		email: emailAddress,
 		password: password
 	} )
