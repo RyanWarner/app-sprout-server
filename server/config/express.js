@@ -1,11 +1,13 @@
 'use strict';
 
 var express      = require( 'express' );
+var session      = require( 'express-session' );
 var mongoose     = require( 'mongoose' );
 var path         = require( 'path' );
 var errorhandler = require( 'errorhandler' );
 var bodyParser   = require( 'body-parser' );
 var passport     = require( 'passport' );
+var config       = require( './config' );
 
 
 var rootPath = path.normalize( path.join( __dirname, '/../..' ) );
@@ -22,7 +24,8 @@ module.exports = function( app )
 
 	if ( env === 'development' )
 	{
-		// Disable caching of scripts for easier testing
+		// Disable caching of scripts for easier testing.
+
 		app.use( function noCache( req, res, next )
 		{
 			if( req.url.indexOf( '/scripts/' ) === 0 )
@@ -35,6 +38,8 @@ module.exports = function( app )
 			next(  );
 		} );
 
+
+
 		// Error handler
 
 		app.use( errorhandler(  ) );
@@ -44,10 +49,20 @@ module.exports = function( app )
 
 	app.use( bodyParser.json(  ) );
 
+
+
 	//use passport session
 
-	app.use( passport.initialize() );
-	app.use( passport.session( ) );
+	app.use( session(
+	{
+		secret: config.sessionSecret,
+		saveUninitialized: true,
+		resave: true
+	} ) );
+
+	app.use( passport.initialize(  ) );
+	app.use( passport.session(  ) );
+
 	promise.fulfill(  );
 
 

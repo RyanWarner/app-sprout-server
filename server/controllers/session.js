@@ -1,9 +1,9 @@
 'use strict';
 
-var mongoose = require( 'mongoose' );
-var passport = require( 'passport' );
-var request = require( 'request' );
-var config = require( '../config/config.js' );
+var mongoose  = require( 'mongoose' );
+var passport  = require( 'passport' );
+var request   = require( 'request' );
+var config    = require( '../config/config.js' );
 var utilities = require( '../utilities/utilities' );
 
 
@@ -14,7 +14,7 @@ exports.logout = function( req, res )
 {
 	console.log( 'logout' );
 	req.logout(  );
-	res.send( 204, { } );
+	res.send( 204, {  } );
 };
 
 
@@ -115,13 +115,13 @@ exports.loginWithFacebookToken = function( req, res, next )
 					user.facebookId = id;
 				}
 
-				user.save( function( err, savedGuest, numAffect )
+				user.save( function( err, savedUser, numAffect )
 				{
 					if( err )
 					{
 						return res.send( 500, { message: err.message } );
 					}
-					req.logIn( savedGuest, function( err )
+					req.logIn( savedUser, function( err )
 					{
 						if( err )
 						{
@@ -135,7 +135,7 @@ exports.loginWithFacebookToken = function( req, res, next )
 		}
 		else
 		{
-			return res.send( 500, { message: 'Facebook verification failed' } );
+			return res.send( 500, { message: 'Facebook verification failed.' } );
 		}
 
 	} );

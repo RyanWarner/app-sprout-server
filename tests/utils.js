@@ -35,7 +35,7 @@ exports.stopTestServer = function( server, done )
 	{
 		console.log( 'mongoose closed' );
 
-		server.close( function( )
+		server.close( function(  )
 		{
 			console.log( 'server closed' );
 			if( done )
@@ -77,12 +77,12 @@ exports.registerUser = function( api, emailAddress, password, expectedStatusCode
 
 	var promise = new mongoose.Promise(  );
 
-	api.post( '/api/user/register' )
-	.send( {
-
+	api
+	.post( '/api/user/register' )
+	.send
+	( {
 		email: emailAddress,
 		password: password
-
 	} )
 	.expect( expectedStatusCode )
 	.end( function( err, res )

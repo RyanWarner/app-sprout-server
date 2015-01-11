@@ -1,8 +1,7 @@
 'use strict';
 
-var mongoose = require( 'mongoose' );
-var Schema = mongoose.Schema;
-
+var mongoose  = require( 'mongoose' );
+var Schema    = mongoose.Schema;
 var utilities = require( '../utilities/utilities' );
 
 
@@ -11,12 +10,16 @@ var utilities = require( '../utilities/utilities' );
 // User Schema.  |
 // --------------+
 
-var authTypes = [ 'foursquare', 'twitter', 'facebook' ];
+var authTypes = [ 'twitter', 'facebook' ];
 
 var UserSchema = new Schema( {
 	_id: String,
 	name: String,
-	email: { type: String, unique: true },
+	email:
+	{
+		type: String,
+		unique: true
+	},
 	role:
 	{
 		type: String,
@@ -35,20 +38,17 @@ var UserSchema = new Schema( {
 		accessToken: String,
 		refreshToken: String
 	},
-	foursquare:
-	{
-		accessToken: String,
-		refreshToken: String
-	},
 	profile:
 	{
 		id: String,
 		displayName: String,
-		emails: [
-		{
-			value: String,
-			type: String
-		} ],
+		emails:
+		[
+			{
+				value: String,
+				type: String
+			}
+		],
 		photos:[ String ]
 	}
 } );
@@ -64,7 +64,7 @@ UserSchema
 	{
 		if( password.length < 8 )
 		{
-			throw new Error( 'password is too short' );
+			throw new Error( 'Password is too short.' );
 		}
 		this._password = password;
 		this.salt = utilities.makeSalt(  );
@@ -87,16 +87,6 @@ UserSchema
 		};
 	} );
 
-// Basic info to identify the current authenticated user in the app
-
-UserSchema
-	.virtual( 'user' )
-	.get( function(  )
-	{
-		return this.parent(  );
-	} );
-
-
 
 
 //--------------+
@@ -104,7 +94,7 @@ UserSchema
 //--------------+
 
 
-// Validate empty email
+// Validate empty email.
 
 UserSchema
 	.path( 'email' )
@@ -115,7 +105,7 @@ UserSchema
 			return false;
 		}
 
-		// if you are authenticating by any of the oauth strategies, don't validate
+		// If you are authenticating by any of the oauth strategies, don't validate.
 
 		if( authTypes.indexOf( this.provider ) !== -1 )
 		{
@@ -128,14 +118,14 @@ UserSchema
 
 
 
-// Validate empty password
+// Validate empty password.
 
 UserSchema
 	.path( 'hashedPassword' )
 	.validate( function( hashedPassword )
 	{
 
-		// if you are authenticating by any of the oauth strategies, don't validate
+		// If you are authenticating by any of the oauth strategies, don't validate.
 		if( authTypes.indexOf( this.provider ) !== -1 )
 		{
 			return true;
@@ -177,12 +167,12 @@ UserSchema.statics =
 {
 	blankUser: function(  )
 	{
-		console.log( 'blankUser' );
+		console.log( 'User.blankUser(  )' );
+
 		var newUser = new this(  );
 
-		// encrypt user id
+		// Encrypt user ID.
 		newUser._id = utilities.newEncryptedId(  );
-		//console.log( newUser );
 
 		return newUser;
 	},

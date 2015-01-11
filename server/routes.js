@@ -1,17 +1,41 @@
 'use strict';
 
-var index    = require( './controllers/index' );
 var user     = require( './controllers/user' );
 var session  = require( './controllers/session' );
+
+
 
 // Application routes
 
 module.exports = function( app )
 {
+	var apiPending = function( req, res )
+	{
+		res.send( { msg: 'Not implemented yet.' }, 501 );
+	};
+
+	var authRequired = function( req, res, next )
+	{
+		console.log( 'Authorization is required. Are you authenticated?' );
+
+		if( req.isAuthenticated(  ) )
+		{
+			console.log( 'Yes! You are authenticated.' );
+			return next(  );
+		}
+
+		console.log( 'No, you are not authenticated.' );
+
+		res.status( 401 ).send( { msg: 'Unauthorized.' } );
+	};
+
+
+
 	// Session handlers, used throughout express core.
 
 	app.post( '/api/user/session', session.loginUser );
 	app.delete( '/api/user/session', session.logout );
+
 
 
 	// Registration and login.
@@ -20,9 +44,5 @@ module.exports = function( app )
 	app.get(  '/api/user/preLogin', user.preLogin );
 
 
-
-	app.get( '/partials/*', index.partials );
-	app.get( '/directives/*', index.partials );
-	app.get( '/*', index.index );
-	console.log( 'in routes END' );
+	console.log( 'Routes successfully loaded.' );
 };
