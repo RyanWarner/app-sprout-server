@@ -19,8 +19,8 @@
   "devDependencies": {
     "errorhandler": "~1.2.2",
     "gulp": "^3.8.11",
-    "gulp-eslint": "~0.1.8",
-    "gulp-nodemon": "~1.0.4",
+    "gulp-eslint": "^0.8.0",
+    "gulp-nodemon": "^2.0.2",
     "gulp-spawn-mocha": "^2.0.1",
     "gulp-util": "^3.0.4",
     "istanbul": "~0.3.2",
