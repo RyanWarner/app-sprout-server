@@ -53,8 +53,8 @@ module.exports = function( app )
 
 	//use passport session
 
-	app.use( session(
-	{
+	app.use( session
+	( {
 		secret: config.sessionSecret,
 		saveUninitialized: true,
 		resave: true

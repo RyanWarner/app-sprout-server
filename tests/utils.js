@@ -79,8 +79,8 @@ exports.registerUser = function( api, emailAddress, password, expectedStatusCode
 
 	api
 	.post( '/api/user/register' )
-	.send
-	( {
+	.send(
+	{
 		email: emailAddress,
 		password: password
 	} )
