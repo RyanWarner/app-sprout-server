@@ -24,7 +24,7 @@
     "gulp-spawn-mocha": "^2.0.1",
     "gulp-util": "~3.0.1",
     "istanbul": "~0.3.2",
-    "mocha": "~1.21.5",
+    "mocha": "^2.2.4",
     "run-sequence": "~1.0.1",
     "should": "~4.0.4",
     "supertest": "~0.14.0"
