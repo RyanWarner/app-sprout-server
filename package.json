@@ -21,7 +21,7 @@
     "gulp": "^3.8.11",
     "gulp-eslint": "~0.1.8",
     "gulp-nodemon": "~1.0.4",
-    "gulp-spawn-mocha": "~0.4.1",
+    "gulp-spawn-mocha": "^2.0.1",
     "gulp-util": "~3.0.1",
     "istanbul": "~0.3.2",
     "mocha": "~1.21.5",
