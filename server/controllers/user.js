@@ -2,6 +2,8 @@
 
 var mongoose  = require( 'mongoose' );
 var User      = mongoose.model( 'User' );
+var ListItems = mongoose.model( 'ListItems' );
+
 var config    = require( '../config/config.js' );
 var validator = require( 'validator' );
 
@@ -73,37 +75,38 @@ exports.createListItem = function( req, res, next )
 	var userId = req.user._id;
 	var listItem = req.body.listItem;
 
-	User.findByIdAndUpdate(
+	ListItems.createListItem( userId, listItem )
+	.then( function( newListItem )
 	{
-		'_id': userId
-	},
-	{
-		$push:
+		User.findByIdAndUpdate(
 		{
-			'list': listItem
-		}
-	},
-	{
-		upsert: true
-	},
-	function( error, user )
-	{
-		if( error )
+			'_id': userId
+		},
 		{
-			console.log( err );
-			res.status( 500 ).send( { message: err.message } );
-		}
-		else
-		{
-			if( user )
+			$push:
 			{
-				res.status( 200 ).send( { list: user.list } );
+				'list': newListItem._id
+			}
+		},
+		function( error, user )
+		{
+			if( error )
+			{
+				console.log( err );
+				res.status( 500 ).send( { 'message': err.message } );
 			}
 			else
 			{
-				res.status( 500 ).send( { message: 'No user found.' } );
+				if( user )
+				{
+					res.status( 200 ).send( { 'newListItem': newListItem } );
+				}
+				else
+				{
+					res.status( 500 ).send( { 'message': 'No user found.' } );
+				}
 			}
-		}
+		} );
 	} );
 };
 
@@ -114,5 +117,22 @@ exports.deleteListItem = function( req, res, next )
 
 exports.getList = function( req, res, next )
 {
+	var userId = req.user._id;
 
+	ListItems.find(
+	{
+		user: userId
+	},
+	function( error, listItems )
+	{
+		if( !error )
+		{
+			res.status( 200 ).send( { 'listItems': listItems } );
+		}
+		else
+		{
+			console.log( error );
+			res.status( 500 ).send( { 'message': 'Error getting list items.' } );
+		}
+	} );
 };

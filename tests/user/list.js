@@ -89,7 +89,7 @@ describe( 'User Register', function(  )
 		.expect( 200 )
 		.end( function( error, response )
 		{
-			response.body.list[ 0 ].should.equal( 'Wii U' );
+			response.body.newListItem.name.should.equal( 'Wii U' );
 			done(  );
 		} );
 	} );

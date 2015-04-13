@@ -43,7 +43,18 @@ var UserSchema = new Schema( {
 		id: String,
 		displayName: String
 	},
-	list: [ String ]
+	// This is a document reference example.
+	// Because 'list' is simple, and does not have deep
+	// nesting, it doesn't really NEED to be a document reference
+	// and could be embedded instead (like the profile object for example).
+	// See: http://stackoverflow.com/questions/5373198/mongodb-relationships-embed-or-reference
+	list:
+	[
+		{
+			type: String,
+			ref: 'ListItem'
+		}
+	]
 } );
 
 
