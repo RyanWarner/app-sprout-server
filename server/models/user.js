@@ -42,7 +42,8 @@ var UserSchema = new Schema( {
 	{
 		id: String,
 		displayName: String
-	}
+	},
+	list: [ String ]
 } );
 
 

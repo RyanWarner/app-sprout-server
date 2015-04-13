@@ -31,7 +31,7 @@ module.exports = function( app )
 
 
 
-	// Session handlers, used throughout express core.
+	// Session handlers.
 
 	app.post( '/api/user/session', session.loginUser );
 	app.delete( '/api/user/session', session.logout );
@@ -42,6 +42,11 @@ module.exports = function( app )
 
 	app.post( '/api/user/register', user.register );
 	app.get(  '/api/user/preLogin', user.preLogin );
+
+
+	app.post( '/api/user/list', authRequired, user.createListItem );
+	// app.delete( '/api/user/list', authRequired, user.deleteListItem );
+	// app.get( '/api/user/list', authRequired, user.getList );
 
 
 	console.log( 'Routes successfully loaded.' );

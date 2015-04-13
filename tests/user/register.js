@@ -77,7 +77,7 @@ describe( 'User Register', function(  )
 		.end( function( err, res )
 		{
 			should.not.exist( err );
-			done( );
+			done(  );
 		} );
 	} );
 

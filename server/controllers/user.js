@@ -33,7 +33,7 @@ exports.register = function( req, res, next )
 	{
 		console.log( err );
 		res.status( 500 ).send( { message: err.message } );
-	} ).end( );
+	} ).end(  );
 };
 
 exports.preLogin = function( req, res, next )
@@ -66,4 +66,53 @@ exports.preLogin = function( req, res, next )
 			}
 		} );
 	}
+};
+
+exports.createListItem = function( req, res, next )
+{
+	var userId = req.user._id;
+	var listItem = req.body.listItem;
+
+	User.findByIdAndUpdate(
+	{
+		'_id': userId
+	},
+	{
+		$push:
+		{
+			'list': listItem
+		}
+	},
+	{
+		upsert: true
+	},
+	function( error, user )
+	{
+		if( err )
+		{
+			console.log( err );
+			res.status( 500 ).send( { message: err.message } );
+		}
+		else
+		{
+			if( user )
+			{
+				res.status( 200 ).send( list: user.list );
+			}
+			else
+			{
+				res.status( 500 ).send( message: 'No user found.' );
+			}
+		}
+	} );
+};
+
+exports.deleteListItem = function( req, res, next )
+{
+
+};
+
+exports.getList = function( req, res, next )
+{
+
 };
