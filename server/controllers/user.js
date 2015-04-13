@@ -15,20 +15,20 @@ exports.register = function( req, res, next )
 	User.register( req.body.email, req.body.password )
 	.then( function( user )
 	{
-		req.login( user, function( err )
-		{
-			if( err )
-			{
-				console.log( err );
-				res.status( 500 ).send( { message: err.message } );
-			}
-			else
-			{
-				console.log( 'Successfully logged new user in.', user );
+		// req.login( user, function( err )
+		// {
+		// 	if( err )
+		// 	{
+		// 		console.log( err );
+		// 		res.status( 500 ).send( { message: err.message } );
+		// 	}
+		// 	else
+		// 	{
+		// 		console.log( 'Successfully logged new user in.', user );
 				// res.status( 200 ).send( { user: user.userInfo } );
 				next(  );
-			}
-		} );
+		// 	}
+		// } );
 
 		return;
 	},
