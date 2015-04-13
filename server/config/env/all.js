@@ -26,7 +26,7 @@ module.exports =
 
 	mongo:
 	{
-		uri: 'mongodb://localhost/node-seed-dev',
+		uri: 'mongodb://localhost/node-sprout-dev',  // Setup Config (!)
 		options:
 		{
 			db:

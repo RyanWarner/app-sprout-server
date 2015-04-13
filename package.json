@@ -4,6 +4,8 @@
   "author": "Ryan Warner",
   "dependencies": {
     "body-parser": "^1.9.3",
+    "connect-mongo": "^0.8.0",
+    "errorhandler": "~1.2.2",
     "express": "^4.9.8",
     "express-session": "^1.9.3",
     "lodash": "^2.4.1",
@@ -17,7 +19,6 @@
     "validator": "^3.22.2"
   },
   "devDependencies": {
-    "errorhandler": "~1.2.2",
     "gulp": "^3.8.11",
     "gulp-eslint": "^0.8.0",
     "gulp-nodemon": "^2.0.2",

@@ -2,6 +2,7 @@
 
 var express      = require( 'express' );
 var session      = require( 'express-session' );
+var MongoStore   = require( 'connect-mongo' )( session );
 var mongoose     = require( 'mongoose' );
 var path         = require( 'path' );
 var errorhandler = require( 'errorhandler' );
@@ -10,14 +11,12 @@ var passport     = require( 'passport' );
 var config       = require( './config' );
 
 
-var rootPath = path.normalize( path.join( __dirname, '/../..' ) );
-
 
 var allowCrossDomain = function( req, res, next )
 {
-	// res.header( 'Access-Control-Allow-Origin',  'http://192.168.0.33:8100' );
-	res.header( 'Access-Control-Allow-Origin',  '*' ); // temporarily allow all domains
-	//res.header( 'Access-Control-Allow-Credentials', true );
+	res.header( 'Access-Control-Allow-Origin',  'http://localhost:8080' );
+	// res.header( 'Access-Control-Allow-Origin',  '*' ); // temporarily allow all domains
+	res.header( 'Access-Control-Allow-Credentials', true );
 	res.header( 'Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS' );
 	res.header( 'Access-Control-Allow-Headers', 'Origin, X-Requested-With, X-AUTHENTICATION, X-IP, Content-Type, Accept' );
 
@@ -55,9 +54,10 @@ module.exports = function( app )
 		app.use( errorhandler(  ) );
 	}
 
-	app.use( bodyParser.urlencoded( { extended: true } ) );
 
-	app.use( bodyParser.json(  ) );
+	app.use( bodyParser.urlencoded( { limit: '5mb', extended: true } ) );
+
+	app.use( bodyParser.json( { limit: '5mb' } ) );
 
 
 
@@ -65,15 +65,34 @@ module.exports = function( app )
 
 	app.use( session(
 	{
+		store: new MongoStore( {
+			url: config.mongo.uri,
+			db: 'node-sprout-store',
+			clear_interval: 3600
+		} ),
 		secret: config.sessionSecret,
 		saveUninitialized: true,
-		resave: true
+		resave: false,
+		proxy: false,
+		cookie:
+		{
+			maxAge: 24 * 60 * 60 * 1000 * 31, // 1 month
+			secure: false,
+			httpOnly: false
+		}
 	} ) );
-
-	app.use( allowCrossDomain );
 
 	app.use( passport.initialize(  ) );
 	app.use( passport.session(  ) );
+	app.use( allowCrossDomain );
+
+	app.use(function(req, res, next)
+	{
+	    console.log('-- session --');
+	    console.dir(req.session);
+	    console.log('-------------');
+	    next()
+	} );
 
 	promise.fulfill(  );
 

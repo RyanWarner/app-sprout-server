@@ -15,7 +15,7 @@ exports.register = function( req, res, next )
 	User.register( req.body.email, req.body.password )
 	.then( function( user )
 	{
-		req.logIn( user, function( err )
+		req.login( user, function( err )
 		{
 			if( err )
 			{
@@ -24,9 +24,10 @@ exports.register = function( req, res, next )
 			}
 			else
 			{
-				return res.json( req.user.userInfo );
+				console.log( 'Successfully logged new user in.', user );
+				// res.status( 200 ).send( { user: user.userInfo } );
+				next(  );
 			}
-
 		} );
 
 		return;

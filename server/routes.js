@@ -40,7 +40,7 @@ module.exports = function( app )
 
 	// Registration and login.
 
-	app.post( '/api/user/register', user.register );
+	app.post( '/api/user/register', user.register, session.loginUser );
 	app.get(  '/api/user/preLogin', user.preLogin );
 
 

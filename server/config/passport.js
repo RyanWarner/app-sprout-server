@@ -12,6 +12,8 @@ var utilities     = require( '../utilities/utilities' );
 
 passport.serializeUser( function( user, done )
 {
+	console.log( 'PassportConfig.serializeUser(  );' );
+
 	var userId = user._id;
 
 	done( null, userId );
@@ -19,6 +21,8 @@ passport.serializeUser( function( user, done )
 
 passport.deserializeUser( function( userId, done )
 {
+	console.log( 'PassportConfig.deserializeUser(  );' );
+
 	User.findOne( {
 
 		'_id': userId
@@ -26,6 +30,11 @@ passport.deserializeUser( function( userId, done )
 	'-salt -hashedPassword', // don't ever give out the password or salt.
 	function( err, user )
 	{
+		console.log( 'user' );
+		console.log( 'user' );
+		console.log( user );
+		console.log( 'user' );
+		console.log( 'user' );
 		if( !user )
 		{
 			console.log( 'Invalid user session.' );
