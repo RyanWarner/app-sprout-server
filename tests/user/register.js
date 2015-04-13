@@ -169,9 +169,9 @@ describe( 'User Register', function(  )
 
 				} )
 				.expect( 200 )
-				.end( function( err, res )
+				.end( function( err2, res2 )
 				{
-					should.not.exist( err );
+					should.not.exist( err2 );
 					done(  );
 				} );
 			} );

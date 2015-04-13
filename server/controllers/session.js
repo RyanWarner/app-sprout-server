@@ -32,11 +32,11 @@ exports.loginUser = function( req, res, next )
 			return res.status( 401 ).json( error );
 		}
 
-		req.logIn( user, function( err )
+		req.logIn( user, function( loginError )
 		{
-			if( err )
+			if( loginError )
 			{
-				return res.send( err );
+				return res.send( loginError );
 			}
 
 			res.json( req.user.userInfo );
@@ -54,11 +54,11 @@ exports.loginWithTwitterToken = function( req, res, next )
 			return res.json( 401, error );
 		}
 
-		req.logIn( user, function( err )
+		req.logIn( user, function( loginError )
 		{
-			if( err )
+			if( loginError )
 			{
-				return res.send( 500, { message: err.message } );
+				return res.send( 500, { message: loginError.message } );
 			}
 			res.json( 200, req.user.userInfo );
 		} );
@@ -72,10 +72,10 @@ exports.loginWithFacebookToken = function( req, res, next )
 	var get =
 	{
 		uri: 'https://graph.facebook.com/me/',
-		json:true,
+		json: true,
 		qs:
 		{
-			access_token:accessToken
+			access_token: accessToken
 		}
 	};
 
@@ -95,11 +95,11 @@ exports.loginWithFacebookToken = function( req, res, next )
 
 			var User = mongoose.model( 'User' );
 
-			User.findOne( { facebookId:id }, function( err, user )
+			User.findOne( { facebookId: id }, function( findError, user )
 			{
-				if( err )
+				if( findError )
 				{
-					return res.send( 500, { message: err.message } );
+					return res.send( 500, { message: findError.message } );
 				}
 
 				if( user === null )
@@ -115,17 +115,17 @@ exports.loginWithFacebookToken = function( req, res, next )
 					user.facebookId = id;
 				}
 
-				user.save( function( err, savedUser, numAffect )
+				user.save( function( saveError, savedUser, numAffect )
 				{
-					if( err )
+					if( saveError )
 					{
-						return res.send( 500, { message: err.message } );
+						return res.send( 500, { message: saveError.message } );
 					}
-					req.logIn( savedUser, function( err )
+					req.logIn( savedUser, function( loginError )
 					{
-						if( err )
+						if( loginError )
 						{
-							return res.send( 500, { message: err.message } );
+							return res.send( 500, { message: loginError.message } );
 						}
 
 						return res.json( 200, req.user.userInfo );

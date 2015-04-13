@@ -20,7 +20,7 @@ exports.startTestServer = function( )
 		server.on( 'listening', function(  )
 		{
 			console.log( 'test server listening' );
-			promise.fulfill( { server:server, app:app } );
+			promise.fulfill( { server: server, app: app } );
 		} );
 
 		server.listen( config.port );
@@ -94,12 +94,12 @@ exports.registerUser = function( api, emailAddress, password, expectedStatusCode
 
 		var User = mongoose.model( 'User' );
 
-		User.find( { 'email': emailAddress }, function( err, users )
+		User.find( { 'email': emailAddress }, function( findError, users )
 		{
-			if( err )
+			if( findError )
 			{
-				console.log( err );
-				promise.reject( err );
+				console.log( findError );
+				promise.reject( findError );
 				return;
 			}
 
