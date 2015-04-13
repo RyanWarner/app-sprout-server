@@ -13,6 +13,7 @@ var utilities = require( '../utilities/utilities' );
 var ListItemSchema = new Schema( {
 
 	_id: String,
+	user: String,
 	name: String
 
 } );

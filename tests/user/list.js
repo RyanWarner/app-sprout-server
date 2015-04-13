@@ -94,4 +94,16 @@ describe( 'User Register', function(  )
 		} );
 	} );
 
+	it( 'Should get all the list items', function( done )
+	{
+		api.get( '/api/user/list' )
+		.expect( 200 )
+		.end( function( error, response )
+		{
+			console.log( response.body );
+			response.body.listItems[ 0 ].name.should.equal( 'Wii U' );
+			done(  );
+		} );
+	} );
+
 } );

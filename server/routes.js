@@ -46,7 +46,7 @@ module.exports = function( app )
 
 	app.post( '/api/user/list', authRequired, user.createListItem );
 	// app.delete( '/api/user/list', authRequired, user.deleteListItem );
-	// app.get( '/api/user/list', authRequired, user.getList );
+	app.get( '/api/user/list', authRequired, user.getList );
 
 
 	console.log( 'Routes successfully loaded.' );
