@@ -13,6 +13,16 @@ var config       = require( './config' );
 var rootPath = path.normalize( path.join( __dirname, '/../..' ) );
 
 
+var allowCrossDomain = function( req, res, next )
+{
+	// res.header( 'Access-Control-Allow-Origin',  'http://192.168.0.33:8100' );
+	res.header( 'Access-Control-Allow-Origin',  '*' ); // temporarily allow all domains
+	//res.header( 'Access-Control-Allow-Credentials', true );
+	res.header( 'Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS' );
+	res.header( 'Access-Control-Allow-Headers', 'Origin, X-Requested-With, X-AUTHENTICATION, X-IP, Content-Type, Accept' );
+
+	next(  );
+};
 
 // Express configuration
 
@@ -53,12 +63,14 @@ module.exports = function( app )
 
 	//use passport session
 
-	app.use( session
-	( {
+	app.use( session(
+	{
 		secret: config.sessionSecret,
 		saveUninitialized: true,
 		resave: true
 	} ) );
+
+	app.use( allowCrossDomain );
 
 	app.use( passport.initialize(  ) );
 	app.use( passport.session(  ) );

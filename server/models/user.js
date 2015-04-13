@@ -41,15 +41,7 @@ var UserSchema = new Schema( {
 	profile:
 	{
 		id: String,
-		displayName: String,
-		emails:
-		[
-			{
-				value: String,
-				type: String
-			}
-		],
-		photos:[ String ]
+		displayName: String
 	}
 } );
 
@@ -70,7 +62,7 @@ UserSchema
 		this.salt = utilities.makeSalt(  );
 		this.hashedPassword = utilities.encryptPassword( password, this.salt );
 	} )
-	.get( function()
+	.get( function(  )
 	{
 		return this._password;
 	} );

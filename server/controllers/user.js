@@ -1,8 +1,8 @@
 'use strict';
 
-var mongoose = require( 'mongoose' );
-var User = mongoose.model( 'User' );
-var config = require( '../config/config.js' );
+var mongoose  = require( 'mongoose' );
+var User      = mongoose.model( 'User' );
+var config    = require( '../config/config.js' );
 var validator = require( 'validator' );
 
 exports.register = function( req, res, next )
@@ -10,7 +10,8 @@ exports.register = function( req, res, next )
 	console.log( 'UserController register( );' );
 	console.log( req.body );
 
-	User.register( req.body.email, req.body.password ).then( function( user )
+	User.register( req.body.email, req.body.password )
+	.then( function( user )
 	{
 		req.logIn( user, function( err )
 		{
@@ -39,7 +40,7 @@ exports.preLogin = function( req, res, next )
 {
 	var email = req.query.email;
 
-	if( ! validator.isEmail( email ) )
+	if( !validator.isEmail( email ) )
 	{
 		res.status( 500 ).send( { message: 'Email is invalid' } );
 	}
