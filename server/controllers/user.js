@@ -88,7 +88,7 @@ exports.createListItem = function( req, res, next )
 	},
 	function( error, user )
 	{
-		if( err )
+		if( error )
 		{
 			console.log( err );
 			res.status( 500 ).send( { message: err.message } );
@@ -97,11 +97,11 @@ exports.createListItem = function( req, res, next )
 		{
 			if( user )
 			{
-				res.status( 200 ).send( list: user.list );
+				res.status( 200 ).send( { list: user.list } );
 			}
 			else
 			{
-				res.status( 500 ).send( message: 'No user found.' );
+				res.status( 500 ).send( { message: 'No user found.' } );
 			}
 		}
 	} );

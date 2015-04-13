@@ -6,33 +6,27 @@ var passport      = require( 'passport' );
 var LocalStrategy = require( 'passport-local' ).Strategy;
 var config        = require( './config' );
 var utilities     = require( '../utilities/utilities' );
-var urlPrefix     = config.hostname;
 
 
 // Passport configuration
 
 passport.serializeUser( function( user, done )
 {
-	var jsonObject =
-	{
-		id: user._id
-	};
+	var userId = user._id;
 
-	done( null, JSON.stringify( jsonObject ) );
+	done( null, userId );
 } );
 
-passport.deserializeUser( function( userJsonString, done )
+passport.deserializeUser( function( userId, done )
 {
-	var jsonObject = JSON.parse( userJsonString );
-
 	User.findOne( {
 
-		'users._id': jsonObject.id
+		'_id': userId
 	},
 	'-salt -hashedPassword', // don't ever give out the password or salt.
 	function( err, user )
 	{
-		if( ! user )
+		if( !user )
 		{
 			console.log( 'Invalid user session.' );
 			done( null, false );
@@ -57,11 +51,11 @@ var localStrategyOptions =
 
 var localUserStrategyCallback = function( email, password, done )
 {
-	User.findOne( {
-
+	User.findOne(
+	{
 		'email': email
-
-	}, function( err, user )
+	},
+	function( err, user )
 	{
 		if( err )
 		{
