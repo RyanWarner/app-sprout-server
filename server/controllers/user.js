@@ -3,6 +3,7 @@
 var mongoose  = require( 'mongoose' );
 var User      = mongoose.model( 'User' );
 var ListItems = mongoose.model( 'ListItems' );
+var Promise   = require( 'bluebird' );
 
 var config    = require( '../config/config.js' );
 var validator = require( 'validator' );
@@ -15,22 +16,7 @@ exports.register = function( req, res, next )
 	User.register( req.body.email, req.body.password )
 	.then( function( user )
 	{
-		// req.login( user, function( err )
-		// {
-		// 	if( err )
-		// 	{
-		// 		console.log( err );
-		// 		res.status( 500 ).send( { message: err.message } );
-		// 	}
-		// 	else
-		// 	{
-		// 		console.log( 'Successfully logged new user in.', user );
-				// res.status( 200 ).send( { user: user.userInfo } );
-				next(  );
-		// 	}
-		// } );
-
-		return;
+		next(  );
 	},
 	function( err )
 	{
@@ -71,44 +57,127 @@ exports.preLogin = function( req, res, next )
 	}
 };
 
-exports.createListItem = function( req, res, next )
+var createNewListItem = function( userId, listItem )
 {
-	var userId = req.user._id;
-	var listItem = req.body.listItem;
-
-	ListItems.createListItem( userId, listItem )
-	.then( function( newListItem )
+	return new Promise( function( resolve, reject )
 	{
-		User.findByIdAndUpdate(
+		ListItems.createListItem( userId, listItem )
+		.then( function( newListItem )
 		{
-			'_id': userId
-		},
-		{
-			$push:
+			console.log( '' );
+			console.log( '' );
+			console.log( 'newListItem', newListItem );
+			console.log( '' );
+			console.log( '' );
+			User.findByIdAndUpdate(
 			{
-				'list': newListItem._id
-			}
-		},
-		function( error, user )
-		{
-			if( error )
+				'_id': userId
+			},
 			{
-				console.log( err );
-				res.status( 500 ).send( { 'message': err.message } );
-			}
-			else
-			{
-				if( user )
+				$push:
 				{
-					res.status( 200 ).send( { 'newListItem': newListItem } );
+					'list': newListItem._id
+				}
+			},
+			function( error, user )
+			{
+				if( error )
+				{
+					console.log( error );
+					reject( error );
 				}
 				else
 				{
-					res.status( 500 ).send( { 'message': 'No user found.' } );
+					if( user )
+					{
+						resolve( { 'newListItem': newListItem } );
+					}
+					else
+					{
+						console.log( error );
+						reject( { 'message': 'No user found.' } );
+					}
+				}
+			} );
+		} );
+	} );
+};
+
+var updateListItem = function( listItemId, listItemValue )
+{
+	console.log( 'updateListItem', listItemId, listItemValue );
+
+	return new Promise( function( resolve, reject )
+	{
+		ListItems.findOneAndUpdate(
+		{
+			'_id': listItemId
+		},
+		{
+			'name': listItemValue
+		},
+		function( error, listItem )
+		{
+			console.log( '--=-=-=-=-=-=-=--' );
+			console.log( '' );
+			console.log( 'listItem', listItem );
+			console.log( '' );
+			console.log( '--=-=-=-=-=-=-=--' );
+			if( error )
+			{
+				console.log( error );
+				reject( error );
+			}
+			else
+			{
+				if( listItem )
+				{
+					resolve( { 'updatedListItem': listItem } );
+				}
+				else
+				{
+					reject( { 'message': 'No listItem found.' } );
 				}
 			}
 		} );
 	} );
+};
+
+exports.upsertListItem = function( req, res, next )
+{
+	var userId        = req.user._id;
+	var listItem      = req.body.listItem;
+	var listItemValue = listItem.name;
+	var listItemId    = listItem._id;
+
+	if( listItemId )
+	{
+		// Update an existing list item.
+		updateListItem( listItemId, listItemValue )
+		.then( function( updatedListItem )
+		{
+			res.status( 200 ).send( updatedListItem );
+		} )
+		.catch( function( error )
+		{
+			res.status( 500 ).send( { 'message': error.message } );
+		} );
+	}
+	else
+	{
+		// Create a new list item.
+		createNewListItem( userId, listItemValue )
+		.then( function( newListItem )
+		{
+			res.status( 200 ).send( newListItem );
+		} )
+		.catch( function( error )
+		{
+			res.status( 500 ).send( { 'message': error.message } );
+		} );
+	}
+
+	
 };
 
 exports.deleteListItem = function( req, res, next )

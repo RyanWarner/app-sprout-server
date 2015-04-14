@@ -44,8 +44,8 @@ module.exports = function( app )
 	app.get(  '/api/user/preLogin', user.preLogin );
 
 
-	app.post( '/api/user/list', authRequired, user.createListItem );
-	// app.delete( '/api/user/list', authRequired, user.deleteListItem );
+	app.post( '/api/user/list', authRequired, user.upsertListItem );
+	app.delete( '/api/user/list', authRequired, user.deleteListItem );
 	app.get( '/api/user/list', authRequired, user.getList );
 
 

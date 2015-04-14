@@ -13,6 +13,7 @@ describe( 'User Register', function(  )
 	var server;
 	var User;
 	var sandbox;
+	var listItemId;
 
 
 
@@ -83,13 +84,40 @@ describe( 'User Register', function(  )
 		api.post( '/api/user/list' )
 		.send( {
 
-			listItem: 'Wii U'
+			listItem:
+			{
+				name: 'Wii U'
+			}
 
 		} )
 		.expect( 200 )
 		.end( function( error, response )
 		{
 			response.body.newListItem.name.should.equal( 'Wii U' );
+
+			listItemId = response.body.newListItem._id;
+			should.exist( listItemId );
+
+			done(  );
+		} );
+	} );
+
+	it( 'Should update a list item', function( done )
+	{
+		api.post( '/api/user/list' )
+		.send( {
+
+			listItem:
+			{
+				_id: listItemId,
+				name: 'GameCube'
+			}
+
+		} )
+		.expect( 200 )
+		.end( function( error, response )
+		{
+			response.body.updatedListItem.name.should.equal( 'GameCube' );
 			done(  );
 		} );
 	} );
@@ -101,7 +129,7 @@ describe( 'User Register', function(  )
 		.end( function( error, response )
 		{
 			console.log( response.body );
-			response.body.listItems[ 0 ].name.should.equal( 'Wii U' );
+			response.body.listItems[ 0 ].name.should.equal( 'GameCube' );
 			done(  );
 		} );
 	} );

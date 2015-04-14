@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "author": "Ryan Warner",
   "dependencies": {
+    "bluebird": "^2.9.24",
     "body-parser": "^1.9.3",
     "connect-mongo": "^0.8.0",
     "errorhandler": "~1.2.2",

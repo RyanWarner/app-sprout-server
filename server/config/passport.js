@@ -30,11 +30,6 @@ passport.deserializeUser( function( userId, done )
 	'-salt -hashedPassword', // don't ever give out the password or salt.
 	function( err, user )
 	{
-		console.log( 'user' );
-		console.log( 'user' );
-		console.log( user );
-		console.log( 'user' );
-		console.log( 'user' );
 		if( !user )
 		{
 			console.log( 'Invalid user session.' );
