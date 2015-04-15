@@ -134,4 +134,24 @@ describe( 'User Register', function(  )
 		} );
 	} );
 
+	it( 'Should delete a list item', function( done )
+	{
+		api.delete( '/api/user/list' )
+		.send( {
+
+			listItem:
+			{
+				_id: listItemId,
+				name: 'GameCube'
+			}
+
+		} )
+		.expect( 200 )
+		.end( function( error, response )
+		{
+			response.body.message.should.equal( 'Successfully deleted list item.' );
+			done(  );
+		} );
+	} );
+
 } );

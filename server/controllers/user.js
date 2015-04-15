@@ -118,11 +118,6 @@ var updateListItem = function( listItemId, listItemValue )
 		},
 		function( error, listItem )
 		{
-			console.log( '--=-=-=-=-=-=-=--' );
-			console.log( '' );
-			console.log( 'listItem', listItem );
-			console.log( '' );
-			console.log( '--=-=-=-=-=-=-=--' );
 			if( error )
 			{
 				console.log( error );
@@ -182,7 +177,31 @@ exports.upsertListItem = function( req, res, next )
 
 exports.deleteListItem = function( req, res, next )
 {
+	console.log( 'updateListItem', listItemId, listItemValue );
 
+	var listItem      = req.body.listItem;
+	var listItemValue = listItem.name;
+	var listItemId    = listItem._id;
+
+	return new Promise( function( resolve, reject )
+	{
+		ListItems.findOneAndRemove(
+		{
+			'_id': listItemId
+		},
+		function( error, listItem )
+		{
+			if( error )
+			{
+				console.log( error );
+				reject( error );
+			}
+			else
+			{
+				resolve(  );
+			}
+		} );
+	} );
 };
 
 exports.getList = function( req, res, next )

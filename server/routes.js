@@ -45,7 +45,19 @@ module.exports = function( app )
 
 
 	app.post( '/api/user/list', authRequired, user.upsertListItem );
-	app.delete( '/api/user/list', authRequired, user.deleteListItem );
+	app.delete( '/api/user/list', authRequired, function( req, res )
+	{
+		user.deleteListItem( req, res )
+		.then( function(  )
+		{
+			res.status( 200 ).send( { 'message': 'Successfully deleted list item.' } );
+		} )
+		.catch( function(  )
+		{
+			res.status( 500 ).send( { 'message': 'Failed to send list item.' } );
+		} );
+	} );
+
 	app.get( '/api/user/list', authRequired, user.getList );
 
 
