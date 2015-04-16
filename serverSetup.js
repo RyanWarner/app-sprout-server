@@ -1,10 +1,10 @@
 'use strict';
 
-var express = require( 'express' );
+var express  = require( 'express' );
 var mongoose = require( 'mongoose' );
-var path = require( 'path' );
-var fs = require( 'fs' );
-var config = require( './server/config/config' );
+var path     = require( 'path' );
+var fs       = require( 'fs' );
+var config   = require( './server/config/config' );
 
 
 // Set default node environment to development
@@ -28,15 +28,6 @@ module.exports = function( )
 			require( modelsPath + '/' + file );
 		}
 	} );
-
-
-
-	// Passport Configuration
-
-	var passport = require( './server/config/passport' );
-	console.log( 'passport configured' );
-
-
 
 
 
@@ -66,6 +57,17 @@ module.exports = function( )
 		
 		mongoose.connect( config.mongo.uri, config.mongo.options );
 	} );
+
+	console.log( 'Express configured' );
+
+
+
+	// Passport Configuration
+
+	var passport = require( './server/config/passport' );
+	console.log( 'Passport configured.' );
+
+	
 
 	return promise;
 };

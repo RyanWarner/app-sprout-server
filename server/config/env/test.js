@@ -6,6 +6,6 @@ module.exports =
 	secureSessionCookie: false,
 	mongo:
 	{
-		uri: 'mongodb://localhost/node-seed-test'
+		uri: 'mongodb://localhost/node-sprout-test' // Setup Config (!)
 	}
 };
