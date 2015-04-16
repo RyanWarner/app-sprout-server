@@ -45,7 +45,7 @@ module.exports = function( app )
 
 
 	app.post( '/api/user/list', authRequired, user.upsertListItem );
-	app.delete( '/api/user/list', authRequired, function( req, res )
+	app.put( '/api/user/list', authRequired, function( req, res )
 	{
 		user.deleteListItem( req, res )
 		.then( function(  )

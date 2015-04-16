@@ -64,11 +64,6 @@ var createNewListItem = function( userId, listItem )
 		ListItems.createListItem( userId, listItem )
 		.then( function( newListItem )
 		{
-			console.log( '' );
-			console.log( '' );
-			console.log( 'newListItem', newListItem );
-			console.log( '' );
-			console.log( '' );
 			User.findByIdAndUpdate(
 			{
 				'_id': userId
@@ -177,8 +172,7 @@ exports.upsertListItem = function( req, res, next )
 
 exports.deleteListItem = function( req, res, next )
 {
-	console.log( 'updateListItem', listItemId, listItemValue );
-
+	console.log( 'req.body', req.body );
 	var listItem      = req.body.listItem;
 	var listItemValue = listItem.name;
 	var listItemId    = listItem._id;

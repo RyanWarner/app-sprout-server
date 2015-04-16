@@ -66,9 +66,11 @@ module.exports = function( app )
 	app.use( session(
 	{
 		store: new MongoStore( {
+
 			url: config.mongo.uri,
 			db: 'node-sprout-store',
 			clear_interval: 3600
+
 		} ),
 		secret: config.sessionSecret,
 		saveUninitialized: true,
@@ -85,14 +87,6 @@ module.exports = function( app )
 	app.use( passport.initialize(  ) );
 	app.use( passport.session(  ) );
 	app.use( allowCrossDomain );
-
-	app.use(function(req, res, next)
-	{
-	    console.log('-- session --');
-	    console.dir(req.session);
-	    console.log('-------------');
-	    next()
-	} );
 
 	promise.fulfill(  );
 
