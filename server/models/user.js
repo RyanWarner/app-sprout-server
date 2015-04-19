@@ -66,10 +66,16 @@ UserSchema
 	.virtual( 'password' )
 	.set( function( password )
 	{
-		if( password.length < 8 )
+		if( password === undefined )
 		{
-			throw new Error( 'Password is too short.' );
+			this.invalidate( 'password', 'must be at least 6 characters.' );
 		}
+
+		if( ( password ) && ( password.length < 6 ) )
+		{
+			this.invalidate( 'password', 'must be at least 6 characters.' );
+		}
+
 		this._password = password;
 		this.salt = utilities.makeSalt(  );
 		this.hashedPassword = utilities.encryptPassword( password, this.salt );

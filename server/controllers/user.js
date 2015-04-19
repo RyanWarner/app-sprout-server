@@ -4,6 +4,9 @@ var mongoose  = require( 'mongoose' );
 var User      = mongoose.model( 'User' );
 var ListItems = mongoose.model( 'ListItems' );
 var Promise   = require( 'bluebird' );
+Promise.promisifyAll( mongoose );
+Promise.promisifyAll( User );
+Promise.promisifyAll( User.prototype );
 
 var config    = require( '../config/config.js' );
 var validator = require( 'validator' );
@@ -88,11 +91,16 @@ exports.updateUserInfo = function( req, res, next )
 					user.name = name;
 					user.email = email;
 					user.password = password;
-					user.save(  );
-					// .then( function(  )
-					// {
-						resolve( user.userInfo );
-					// } );
+
+					user.saveAsync(  )
+					.then( function( savedUser )
+					{
+						resolve( savedUser.userInfo );
+					} )
+					.catch( function( error )
+					{
+						reject( error );
+					} );
 				}
 				else
 				{

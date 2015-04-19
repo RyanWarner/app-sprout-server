@@ -51,9 +51,9 @@ module.exports = function( app )
 		{
 			res.status( 200 ).send( userInfo );
 		} )
-		.catch( function(  )
+		.catch( function( error )
 		{
-			res.status( 500 ).send( { 'message': 'Failed to update.' } );
+			res.status( 500 ).send( error );
 		} );
 	} );
 
@@ -66,7 +66,7 @@ module.exports = function( app )
 		{
 			res.status( 200 ).send( { 'message': 'Successfully deleted list item.' } );
 		} )
-		.catch( function(  )
+		.catch( function( error )
 		{
 			res.status( 500 ).send( { 'message': 'Failed to send list item.' } );
 		} );
