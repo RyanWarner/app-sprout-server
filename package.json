@@ -10,7 +10,7 @@
     "express": "^4.9.8",
     "express-session": "^1.9.3",
     "lodash": "^2.4.1",
-    "mongoose": "^3.8.26",
+    "mongoose": "3.8.26",
     "mongoose-timestamp": "~0.3.0",
     "passport": "^0.2.1",
     "passport-local": "~1.0.0",

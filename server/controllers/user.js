@@ -70,13 +70,9 @@ exports.updateUserInfo = function( req, res, next )
 
 	return new Promise( function( resolve, reject )
 	{
-		User.findByIdAndUpdate(
+		User.findById(
 		{
 			'_id': userId
-		},
-		{
-			'name': name,
-			'email': email
 		},
 		function( error, user )
 		{
@@ -89,12 +85,14 @@ exports.updateUserInfo = function( req, res, next )
 			{
 				if( user )
 				{
+					user.name = name;
+					user.email = email;
 					user.password = password;
-					user.saveWithPromise(  )
-					.then( function(  )
-					{
+					user.save(  );
+					// .then( function(  )
+					// {
 						resolve( user.userInfo );
-					} );
+					// } );
 				}
 				else
 				{
