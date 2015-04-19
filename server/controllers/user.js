@@ -11,9 +11,12 @@ var validator = require( 'validator' );
 exports.register = function( req, res, next )
 {
 	console.log( 'UserController register( );' );
-	console.log( req.body );
 
-	User.register( req.body.email, req.body.password )
+	var name = req.body.name;
+	var email = req.body.email;
+	var password = req.body.password;
+
+	User.register( name, email, password )
 	.then( function( user )
 	{
 		next(  );
@@ -55,6 +58,52 @@ exports.preLogin = function( req, res, next )
 			}
 		} );
 	}
+};
+
+exports.updateUserInfo = function( req, res, next )
+{
+	var userId = req.user._id;
+	var userInfo = req.body.userInfo;
+	var name = userInfo.name;
+	var email = userInfo.email;
+	var password = userInfo.password;
+
+	return new Promise( function( resolve, reject )
+	{
+		User.findByIdAndUpdate(
+		{
+			'_id': userId
+		},
+		{
+			'name': name,
+			'email': email
+		},
+		function( error, user )
+		{
+			if( error )
+			{
+				console.log( error );
+				reject( error );
+			}
+			else
+			{
+				if( user )
+				{
+					user.password = password;
+					user.saveWithPromise(  )
+					.then( function(  )
+					{
+						resolve( user.userInfo );
+					} );
+				}
+				else
+				{
+					console.log( error );
+					reject( { 'message': 'No user found.' } );
+				}
+			}
+		} );
+	} );
 };
 
 var createNewListItem = function( userId, listItem )

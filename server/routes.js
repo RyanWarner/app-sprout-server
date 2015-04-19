@@ -44,6 +44,20 @@ module.exports = function( app )
 	app.get(  '/api/user/preLogin', user.preLogin );
 
 
+	app.post( '/api/user/info', authRequired, function( req, res )
+	{
+		user.updateUserInfo( req, res )
+		.then( function( userInfo )
+		{
+			res.status( 200 ).send( userInfo );
+		} )
+		.catch( function(  )
+		{
+			res.status( 500 ).send( { 'message': 'Failed to update.' } );
+		} );
+	} );
+
+
 	app.post( '/api/user/list', authRequired, user.upsertListItem );
 	app.put( '/api/user/list', authRequired, function( req, res )
 	{

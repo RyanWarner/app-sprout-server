@@ -86,6 +86,8 @@ UserSchema
 	.get( function(  )
 	{
 		return {
+			'name': this.name,
+			'email': this.email,
 			'role': this.role
 		};
 	} );
@@ -180,12 +182,13 @@ UserSchema.statics =
 		return newUser;
 	},
 
-	register: function( email, password  )
+	register: function( name, email, password  )
 	{
 		console.log( 'User.register(  );' );
 
 		var newUser = this.blankUser( );
 
+		newUser.name = name;
 		newUser.email = email;
 		newUser.password = password;
 
