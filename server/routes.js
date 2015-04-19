@@ -49,6 +49,7 @@ module.exports = function( app )
 		user.updateUserInfo( req, res )
 		.then( function( userInfo )
 		{
+			console.log( userInfo );
 			res.status( 200 ).send( userInfo );
 		} )
 		.catch( function( error )

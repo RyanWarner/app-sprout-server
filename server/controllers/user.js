@@ -71,6 +71,8 @@ exports.updateUserInfo = function( req, res, next )
 	var email = userInfo.email;
 	var password = userInfo.password;
 
+	console.log( userInfo );
+
 	return new Promise( function( resolve, reject )
 	{
 		User.findById(
@@ -90,12 +92,16 @@ exports.updateUserInfo = function( req, res, next )
 				{
 					user.name = name;
 					user.email = email;
-					user.password = password;
+
+					if( password )
+					{
+						user.password = password;
+					}
 
 					user.saveAsync(  )
 					.then( function( savedUser )
 					{
-						resolve( savedUser.userInfo );
+						resolve( user.userInfo );
 					} )
 					.catch( function( error )
 					{
