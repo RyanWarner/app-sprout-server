@@ -57,7 +57,7 @@ gulp.task( 'serve', function(  )
 	{
 		script: 'server.js'
 	} );
-	gutil.log( 'Listening on port: 8080' );
+	gutil.log( 'Listening.' );
 });
 
 

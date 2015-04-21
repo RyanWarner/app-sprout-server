@@ -136,7 +136,7 @@ describe( 'User Register', function(  )
 
 	it( 'Should delete a list item', function( done )
 	{
-		api.delete( '/api/user/list' )
+		api.put( '/api/user/list' )
 		.send( {
 
 			listItem:

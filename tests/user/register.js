@@ -96,7 +96,7 @@ describe( 'User Register', function(  )
 
 	it( 'Should not register a user with short password', function( done )
 	{
-		testUtils.registerUser( api, 'test@email.com', 'secret', 500, 0 ).then( function( )
+		testUtils.registerUser( api, 'test@email.com', 'short', 500, 0 ).then( function( )
 		{
 			done( );
 		} );

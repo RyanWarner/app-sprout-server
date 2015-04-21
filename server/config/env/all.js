@@ -10,7 +10,7 @@ var rootPath = path.normalize( path.join( __dirname, '/../../..' ) );
 module.exports =
 {
 	root: rootPath,
-	port: process.env.PORT,
+	port: process.env.NODE_PORT,
 	hostname: process.env.NODE_HOST,
 	sessionSecret: process.env.SESSION_SECRET,
 
