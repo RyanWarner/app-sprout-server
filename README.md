@@ -1,4 +1,4 @@
-# node-sprout
+# app-sprout-server
 
 An opinionated started point for Node backends.
 
