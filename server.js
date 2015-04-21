@@ -15,5 +15,5 @@ require( './serverSetup.js' )(  ).then( function( app )
 	} );
 
 	server.listen( 9000 );
-	console.log( 'is server listening 9000?' );
+	console.log( 'Is the server listening on port 9000?' );
 } );
