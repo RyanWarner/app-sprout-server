@@ -7,7 +7,7 @@ var testUtils = require( '../utils' );
 
 
 
-describe( 'User Register', function(  )
+describe( 'User Authentication', function(  )
 {
 	var api;
 	var server;
@@ -22,7 +22,7 @@ describe( 'User Register', function(  )
 
 	before( function( done )
 	{
-		testUtils.startTestServer( ).then( function( aServerAndApp )
+		testUtils.startTestServer(  ).then( function( aServerAndApp )
 		{
 			try
 			{

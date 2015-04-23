@@ -13,7 +13,7 @@ var utilities = require( '../utilities/utilities' );
 
 exports.loginUser = function( req )
 {
-	console.log( 'Session.loginUser(  )' );
+	console.log( 'authentication.loginUser(  )' );
 
 	return new Promise( function( resolve, reject )
 	{

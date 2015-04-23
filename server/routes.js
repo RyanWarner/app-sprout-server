@@ -1,7 +1,8 @@
 'use strict';
 
 var user     = require( './controllers/user' );
-var session  = require( './controllers/session' );
+var list     = require( './controllers/list' );
+var authentication  = require( './controllers/authentication' );
 var Promise  = require( 'bluebird' );
 
 
@@ -40,7 +41,7 @@ module.exports = function( app )
 
 	app.post( '/api/user/session', function( req, res, next )
 	{
-		session.loginUser( req )
+		authentication.loginUser( req )
 		.then( function(  )
 		{
 			res.json( req.user.userInfo );
@@ -82,7 +83,7 @@ module.exports = function( app )
 	},
 	function( req, res, next )
 	{
-		session.loginUser( req )
+		authentication.loginUser( req )
 		.then( function(  )
 		{
 			res.json( req.user.userInfo );
@@ -127,7 +128,7 @@ module.exports = function( app )
 		var listItemValue = listItem.name;
 		var listItemId    = listItem._id;
 
-		user.upsertListItem( userId, listItem, listItemValue, listItemId )
+		list.upsertListItem( userId, listItem, listItemValue, listItemId )
 		.then( function( updatedListItem )
 		{
 			res.status( 200 ).send( updatedListItem );
@@ -140,7 +141,7 @@ module.exports = function( app )
 
 	app.put( '/api/user/list', authRequired, function( req, res )
 	{
-		user.deleteListItem( req, res )
+		list.deleteListItem( req, res )
 		.then( function(  )
 		{
 			res.status( 200 ).send( { 'message': 'Successfully deleted list item.' } );
@@ -155,7 +156,7 @@ module.exports = function( app )
 	{
 		var userId = req.user._id;
 
-		user.getList( userId )
+		list.getList( userId )
 		.then( function( listItems )
 		{
 			res.status( 200 ).send( { 'listItems': listItems } );
