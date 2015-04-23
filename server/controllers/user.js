@@ -162,41 +162,37 @@ var updateListItem = function( listItemId, listItemValue )
 	} );
 };
 
-exports.upsertListItem = function( req, res, next )
+exports.upsertListItem = function( userId, listItem, listItemValue, listItemId )
 {
-	var userId        = req.user._id;
-	var listItem      = req.body.listItem;
-	var listItemValue = listItem.name;
-	var listItemId    = listItem._id;
-
-	if( listItemId )
+	return new Promise( function( resolve, reject )
 	{
-		// Update an existing list item.
-		updateListItem( listItemId, listItemValue )
-		.then( function( updatedListItem )
+		if( listItemId )
 		{
-			res.status( 200 ).send( updatedListItem );
-		} )
-		.catch( function( error )
+			// Update an existing list item.
+			updateListItem( listItemId, listItemValue )
+			.then( function( updatedListItem )
+			{
+				resolve( updatedListItem );
+			} )
+			.catch( function( error )
+			{
+				reject( error );
+			} );
+		}
+		else
 		{
-			res.status( 500 ).send( { 'message': error.message } );
-		} );
-	}
-	else
-	{
-		// Create a new list item.
-		createNewListItem( userId, listItemValue )
-		.then( function( newListItem )
-		{
-			res.status( 200 ).send( newListItem );
-		} )
-		.catch( function( error )
-		{
-			res.status( 500 ).send( { 'message': error.message } );
-		} );
-	}
-
-	
+			// Create a new list item.
+			createNewListItem( userId, listItemValue )
+			.then( function( newListItem )
+			{
+				resolve( newListItem );
+			} )
+			.catch( function( error )
+			{
+				reject( error );
+			} );
+		}
+	} );
 };
 
 exports.deleteListItem = function( req, res, next )

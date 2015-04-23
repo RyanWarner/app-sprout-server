@@ -99,7 +99,24 @@ module.exports = function( app )
 	} );
 
 
-	app.post( '/api/user/list', authRequired, user.upsertListItem );
+	app.post( '/api/user/list', authRequired, function( req, res, next )
+	{
+		// From client:
+		var userId        = req.user._id;
+		var listItem      = req.body.listItem;
+		var listItemValue = listItem.name;
+		var listItemId    = listItem._id;
+
+		user.upsertListItem( userId, listItem, listItemValue, listItemId )
+		.then( function( listItem )
+		{
+			res.status( 200 ).send( listItem );
+		} )
+		.catch( function(  )
+		{
+			res.status( 500 ).send( { 'message': error.message } );
+		} );
+	}  );
 	app.put( '/api/user/list', authRequired, function( req, res )
 	{
 		user.deleteListItem( req, res )
