@@ -6,7 +6,9 @@ var Promise  = require( 'bluebird' );
 
 
 
-// Application routes
+// --------------------+
+// Application routes  |
+// --------------------+
 
 module.exports = function( app )
 {
@@ -32,7 +34,9 @@ module.exports = function( app )
 
 
 
-	// Session handlers.
+	// ------------------+
+	// Session handlers. |
+	// ------------------+
 
 	app.post( '/api/user/session', function( req, res, next )
 	{
@@ -47,11 +51,17 @@ module.exports = function( app )
 		} );
 	} );
 
-	app.delete( '/api/user/session', session.logout );
+	app.delete( '/api/user/session', function( req, res )
+	{
+		req.logout(  );
+		res.status( 204 ).send( {  } );
+	} );
 
 
 
-	// Registration and login.
+	// --------------+
+	// Registration. |
+	// --------------+
 
 	app.post( '/api/user/register', function( req, res, next )
 	{
@@ -84,6 +94,11 @@ module.exports = function( app )
 	} );
 
 
+
+	// --------------+
+	// User account. |
+	// --------------+
+
 	app.post( '/api/user/info', authRequired, function( req, res )
 	{
 		user.updateUserInfo( req, res )
@@ -99,6 +114,11 @@ module.exports = function( app )
 	} );
 
 
+
+	// -----------------+
+	// List operations. |
+	// -----------------+
+
 	app.post( '/api/user/list', authRequired, function( req, res, next )
 	{
 		// From client:
@@ -108,15 +128,16 @@ module.exports = function( app )
 		var listItemId    = listItem._id;
 
 		user.upsertListItem( userId, listItem, listItemValue, listItemId )
-		.then( function( listItem )
+		.then( function( updatedListItem )
 		{
-			res.status( 200 ).send( listItem );
+			res.status( 200 ).send( updatedListItem );
 		} )
 		.catch( function(  )
 		{
 			res.status( 500 ).send( { 'message': error.message } );
 		} );
-	}  );
+	} );
+
 	app.put( '/api/user/list', authRequired, function( req, res )
 	{
 		user.deleteListItem( req, res )
@@ -130,7 +151,20 @@ module.exports = function( app )
 		} );
 	} );
 
-	app.get( '/api/user/list', authRequired, user.getList );
+	app.get( '/api/user/list', authRequired, function( req, res, next )
+	{
+		var userId = req.user._id;
+
+		user.getList( userId )
+		.then( function( listItems )
+		{
+			res.status( 200 ).send( { 'listItems': listItems } );
+		} )
+		.catch( function( error )
+		{
+			res.status( 500 ).send( { 'message': error } );
+		} );
+	} );
 
 
 	console.log( 'Routes successfully loaded.' );

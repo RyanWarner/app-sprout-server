@@ -25,7 +25,7 @@ exports.register = function( name, email, password )
 		function( error )
 		{
 			console.log( error );
-			reject( error )
+			reject( error );
 		} ).end(  );
 	} );
 };
@@ -54,33 +54,30 @@ exports.updateUserInfo = function( req, res, next )
 				console.log( error );
 				reject( error );
 			}
+
+			if( user )
+			{
+				user.name = name;
+				user.email = email;
+
+				if( password )
+				{
+					user.password = password;
+				}
+
+				user.saveAsync(  )
+				.then( function( savedUser )
+				{
+					resolve( user.userInfo );
+				} )
+				.catch( function( saveError )
+				{
+					reject( saveError );
+				} );
+			}
 			else
 			{
-				if( user )
-				{
-					user.name = name;
-					user.email = email;
-
-					if( password )
-					{
-						user.password = password;
-					}
-
-					user.saveAsync(  )
-					.then( function( savedUser )
-					{
-						resolve( user.userInfo );
-					} )
-					.catch( function( error )
-					{
-						reject( error );
-					} );
-				}
-				else
-				{
-					console.log( error );
-					reject( { 'message': 'No user found.' } );
-				}
+				reject( { 'message': 'No user found.' } );
 			}
 		} );
 	} );
@@ -208,7 +205,7 @@ exports.deleteListItem = function( req, res, next )
 		{
 			'_id': listItemId
 		},
-		function( error, listItem )
+		function( error )
 		{
 			if( error )
 			{
@@ -223,24 +220,23 @@ exports.deleteListItem = function( req, res, next )
 	} );
 };
 
-exports.getList = function( req, res, next )
+exports.getList = function( userId )
 {
-	var userId = req.user._id;
+	return new Promise( function( resolve, reject )
+	{
+		ListItems.find(
+		{
+			user: userId
+		},
+		function( error, listItems )
+		{
+			if( error )
+			{
+				console.log( error );
+				reject( error );
+			}
 
-	ListItems.find(
-	{
-		user: userId
-	},
-	function( error, listItems )
-	{
-		if( !error )
-		{
-			res.status( 200 ).send( { 'listItems': listItems } );
-		}
-		else
-		{
-			console.log( error );
-			res.status( 500 ).send( { 'message': 'Error getting list items.' } );
-		}
+			resolve( listItems );
+		} );
 	} );
 };

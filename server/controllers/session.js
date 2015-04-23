@@ -8,16 +8,6 @@ var utilities = require( '../utilities/utilities' );
 
 
 
-// Logout
-
-exports.logout = function( req, res )
-{
-	console.log( 'logout' );
-	req.logout(  );
-	res.status( 204 ).send( {  } );
-};
-
-
 
 // Login
 

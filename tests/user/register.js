@@ -85,20 +85,6 @@ describe( 'User Register', function(  )
 		} );
 	} );
 
-	it( 'Should return found for registred email addresses', function( done )
-	{
-		api.get( '/api/user/prelogin?email=test@email.com' )
-		.expect( 200 )
-		.end( function( err, res )
-		{
-			should.not.exist( err );
-			res.body.found.should.equal( true );
-			should.not.exist( err );
-			done(  );
-		} );
-	} );
-
-
 	it( 'Should not allow the registration of blank email & return status 500', function( done )
 	{
 		testUtils.registerUser( api, '', 'secret01', 500, 0 ).then( function( )
