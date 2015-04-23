@@ -2,6 +2,7 @@
 
 var user     = require( './controllers/user' );
 var session  = require( './controllers/session' );
+var Promise  = require( 'bluebird' );
 
 
 
@@ -33,14 +34,56 @@ module.exports = function( app )
 
 	// Session handlers.
 
-	app.post( '/api/user/session', session.loginUser );
+	app.post( '/api/user/session', function( req, res, next )
+	{
+		session.loginUser( req )
+		.then( function(  )
+		{
+			res.json( req.user.userInfo );
+		} )
+		.catch( function( error )
+		{
+			res.status( 401 ).json( error );
+		} );
+	} );
+
 	app.delete( '/api/user/session', session.logout );
 
 
 
 	// Registration and login.
 
-	app.post( '/api/user/register', user.register, session.loginUser );
+	app.post( '/api/user/register', function( req, res, next )
+	{
+		var name = req.body.name;
+		var email = req.body.email;
+		var password = req.body.password;
+
+		user.register( name, email, password )
+		.then( function(  )
+		{
+			next(  );
+		} )
+		.catch( function( error )
+		{
+			console.log( error );
+			res.status( 500 ).send( { message: error.message } );
+		} );
+	},
+	function( req, res, next )
+	{
+		session.loginUser( req )
+		.then( function(  )
+		{
+			res.json( req.user.userInfo );
+		} )
+		.catch( function( error )
+		{
+			res.status( 401 ).json( error );
+		} );
+	} );
+
+
 	app.get(  '/api/user/preLogin', user.preLogin );
 
 

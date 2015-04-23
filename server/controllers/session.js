@@ -21,30 +21,33 @@ exports.logout = function( req, res )
 
 // Login
 
-exports.loginUser = function( req, res, next )
+exports.loginUser = function( req )
 {
 	console.log( 'Session.loginUser(  )' );
 
-	passport.authenticate( 'local-user', function( err, user, info )
+	return new Promise( function( resolve, reject )
 	{
-		var error = err || info;
-
-		if( error )
+		passport.authenticate( 'local-user', function( err, user, info )
 		{
-			return res.status( 401 ).json( error );
-		}
+			var error = err || info;
 
-		req.login( user, function( loginError )
-		{
-			if( loginError )
+			if( error )
 			{
-				console.log( 'Login eror: ', loginError );
-				return res.send( loginError );
+				reject( error );
 			}
 
-			res.json( req.user.userInfo );
-		} );
-	} )( req, res, next );
+			req.login( user, function( loginError )
+			{
+				if( loginError )
+				{
+					console.log( 'Login eror: ', loginError );
+					reject( loginError );
+				}
+
+				resolve(  );
+			} );
+		} )( req );
+	} );
 };
 
 // exports.loginWithTwitterToken = function( req, res, next )

@@ -11,24 +11,23 @@ Promise.promisifyAll( User.prototype );
 var config    = require( '../config/config.js' );
 var validator = require( 'validator' );
 
-exports.register = function( req, res, next )
+exports.register = function( name, email, password )
 {
 	console.log( 'UserController register( );' );
 
-	var name = req.body.name;
-	var email = req.body.email;
-	var password = req.body.password;
-
-	User.register( name, email, password )
-	.then( function( user )
+	return new Promise( function( resolve, reject )
 	{
-		next(  );
-	},
-	function( err )
-	{
-		console.log( err );
-		res.status( 500 ).send( { message: err.message } );
-	} ).end(  );
+		User.register( name, email, password )
+		.then( function( user )
+		{
+			resolve(  );
+		},
+		function( error )
+		{
+			console.log( error );
+			reject( error )
+		} ).end(  );
+	} );
 };
 
 exports.preLogin = function( req, res, next )
