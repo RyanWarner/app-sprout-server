@@ -30,37 +30,6 @@ exports.register = function( name, email, password )
 	} );
 };
 
-exports.preLogin = function( req, res, next )
-{
-	var email = req.query.email;
-
-	if( !validator.isEmail( email ) )
-	{
-		res.status( 500 ).send( { message: 'Email is invalid' } );
-	}
-	else
-	{
-		User.findOne( { 'email': decodeURIComponent( email ) }, function( err, user )
-		{
-			if( err )
-			{
-				console.log( err );
-				res.status( 500 ).send( { message: err.message } );
-			}
-			else
-			{
-				if( user )
-				{
-					res.status( 200 ).send( { found: true } );
-				}
-				else
-				{
-					res.status( 200 ).send( { found: false } );
-				}
-			}
-		} );
-	}
-};
 
 exports.updateUserInfo = function( req, res, next )
 {

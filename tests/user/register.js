@@ -69,31 +69,6 @@ describe( 'User Register', function(  )
 	} );
 
 
-
-	it( 'Should reject prelogin calls for blank or invalid email addresses', function( done )
-	{
-		api.get( '/api/user/preLogin' )
-		.expect( 500 )
-		.end( function( err, res )
-		{
-			should.not.exist( err );
-			done(  );
-		} );
-	} );
-
-	it( 'Should return not found for unregistred email addresses', function( done )
-	{
-		api.get( '/api/user/prelogin?email=test@email.com' )
-		.expect( 200 )
-		.end( function( err, res )
-		{
-			should.not.exist( err );
-			res.body.found.should.equal( false );
-			should.not.exist( err );
-			done(  );
-		} );
-	} );
-
 	it( 'Should not register a user with short password', function( done )
 	{
 		testUtils.registerUser( api, 'test@email.com', 'short', 500, 0 ).then( function( )

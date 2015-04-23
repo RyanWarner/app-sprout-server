@@ -84,9 +84,6 @@ module.exports = function( app )
 	} );
 
 
-	app.get(  '/api/user/preLogin', user.preLogin );
-
-
 	app.post( '/api/user/info', authRequired, function( req, res )
 	{
 		user.updateUserInfo( req, res )
