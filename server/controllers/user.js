@@ -26,7 +26,7 @@ exports.register = function( name, email, password )
 		{
 			console.log( error );
 			reject( error );
-		} ).end(  );
+		} );
 	} );
 };
 
