@@ -20,7 +20,7 @@
     "validator": "^3.22.2"
   },
   "devDependencies": {
-    "gulp": "^3.8.11",
+    "gulp": "^3.9.0",
     "gulp-eslint": "^0.8.0",
     "gulp-nodemon": "^2.0.2",
     "gulp-spawn-mocha": "^2.0.1",
