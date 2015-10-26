@@ -66,6 +66,9 @@ var updateListItem = function( listItemId, listItemValue )
 		{
 			'name': listItemValue
 		},
+		{
+			'new': true
+		},
 		function( error, listItem )
 		{
 			if( error )
