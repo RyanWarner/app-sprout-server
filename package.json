@@ -22,7 +22,7 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-eslint": "^0.8.0",
-    "gulp-nodemon": "^2.0.2",
+    "gulp-nodemon": "^2.0.4",
     "gulp-spawn-mocha": "^2.0.1",
     "gulp-util": "^3.0.4",
     "istanbul": "~0.3.2",
