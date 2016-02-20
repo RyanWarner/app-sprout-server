@@ -55,16 +55,23 @@ var createNewListItem = function( userId, listItem )
 
 var updateListItem = function( listItemId, listItemValue )
 {
-	console.log( 'updateListItem', listItemId, listItemValue );
+	// console.log( 'updateListItem', listItemId, listItemValue );
 
 	return new Promise( function( resolve, reject )
 	{
 		ListItems.findOneAndUpdate(
 		{
-			'_id': listItemId
+			_id: listItemId
 		},
 		{
-			'name': listItemValue
+			$set:
+			{
+				name: listItemValue
+			}
+			
+		},
+		{
+			new: true
 		},
 		function( error, listItem )
 		{
@@ -75,6 +82,7 @@ var updateListItem = function( listItemId, listItemValue )
 			}
 			else
 			{
+				console.log( listItem );
 				if( listItem )
 				{
 					resolve( { 'updatedListItem': listItem } );
@@ -90,6 +98,8 @@ var updateListItem = function( listItemId, listItemValue )
 
 exports.upsertListItem = function( userId, listItem, listItemValue, listItemId )
 {
+	// console.log( 'upsertListItem', listItemId, listItemValue );
+
 	return new Promise( function( resolve, reject )
 	{
 		if( listItemId )

@@ -7,7 +7,7 @@ var testUtils = require( '../utils' );
 
 
 
-describe( 'User Register', function(  )
+describe( 'List Behavior', function(  )
 {
 	var api;
 	var server;
