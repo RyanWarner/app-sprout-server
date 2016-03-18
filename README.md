@@ -1,6 +1,6 @@
 # app-sprout-server
 
-An opinionated started point for Node backends.
+An opinionated starting point for Node backends.
 
 **Goal**: Create a Node boilerplate that, when coupled with angular-sprout, is able to register and login new users as well as CRUD some fields.
 
