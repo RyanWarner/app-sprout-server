@@ -2,7 +2,7 @@
 
 An opinionated starting point for Node backends.
 
-**Goal**: Create a Node boilerplate that, when coupled with angular-sprout, is able to register and login new users as well as CRUD some fields.
+**Goal**: Create a Node boilerplate that, when coupled with [app-sprout-client](https://github.com/RyanWarner/app-sprout-client), is able to register and login new users as well as CRUD some fields.
 
 
 ## Stack
