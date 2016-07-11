@@ -1,43 +1,35 @@
 'use strict';
 
-var mongoose  = require( 'mongoose' );
-var passport  = require( 'passport' );
-var request   = require( 'request' );
-var config    = require( '../config/config.js' );
-var utilities = require( '../utilities/utilities' );
-
+var mongoose  = require('mongoose');
+var passport  = require('passport');
+var request   = require('request');
+var config    = require('../config/config.js');
+var utilities = require('../utilities/utilities');
 
 
 
 // Login
+exports.loginUser = function(req) {
+	console.log('authentication.loginUser()');
 
-exports.loginUser = function( req )
-{
-	console.log( 'authentication.loginUser(  )' );
-
-	return new Promise( function( resolve, reject )
-	{
-		passport.authenticate( 'local-user', function( err, user, info )
-		{
+	return new Promise( function(resolve, reject) {
+		passport.authenticate( 'local-user', function(err, user, info) {
 			var error = err || info;
 
-			if( error )
-			{
-				reject( error );
+			if(error) {
+				reject(error);
 			}
 
-			req.login( user, function( loginError )
-			{
-				if( loginError )
-				{
-					console.log( 'Login eror: ', loginError );
-					reject( loginError );
+			req.login(user, function(loginError) {
+				if(loginError) {
+					console.log( 'Login eror: ', loginError);
+					reject(loginError);
 				}
 
-				resolve(  );
-			} );
-		} )( req );
-	} );
+				resolve();
+			});
+		})(req);
+	});
 };
 
 // exports.loginWithTwitterToken = function( req, res, next )

@@ -1,180 +1,143 @@
 'use strict';
 
-var mongoose  = require( 'mongoose' );
-var User      = mongoose.model( 'User' );
-var ListItems = mongoose.model( 'ListItems' );
-var Promise   = require( 'bluebird' );
-Promise.promisifyAll( mongoose );
-Promise.promisifyAll( User );
-Promise.promisifyAll( User.prototype );
+var mongoose  = require('mongoose');
+var User      = mongoose.model('User');
+var ListItems = mongoose.model('ListItems');
+var Promise   = require('bluebird');
 
-var config    = require( '../config/config.js' );
-var validator = require( 'validator' );
+Promise.promisifyAll(mongoose);
+Promise.promisifyAll(User);
+Promise.promisifyAll(User.prototype);
+
+var config    = require('../config/config.js');
+var validator = require('validator');
 
 
-var createNewListItem = function( userId, listItem )
+var createNewListItem = function(userId, listItem)
 {
-	return new Promise( function( resolve, reject )
+	return new Promise( function(resolve, reject)
 	{
-		ListItems.createListItem( userId, listItem )
-		.then( function( newListItem )
-		{
-			User.findByIdAndUpdate(
-			{
+		ListItems.createListItem(userId, listItem)
+		.then( function(newListItem) {
+			User.findByIdAndUpdate({
 				'_id': userId
 			},
 			{
-				$push:
-				{
+				$push: {
 					'list': newListItem._id
 				}
 			},
-			function( error, user )
+			function(error, user)
 			{
-				if( error )
-				{
-					console.log( error );
-					reject( error );
+				if(error) {
+					console.log(error);
+					reject(error);
 				}
-				else
-				{
-					if( user )
-					{
-						resolve( { 'newListItem': newListItem } );
+				else {
+					if(user) {
+						resolve({ 'newListItem': newListItem });
 					}
-					else
-					{
-						console.log( error );
-						reject( { 'message': 'No user found.' } );
+					else {
+						console.log(error);
+						reject({ 'message': 'No user found.' });
 					}
 				}
-			} );
-		} );
-	} );
+			});
+		});
+	});
 };
 
-var updateListItem = function( listItemId, listItemValue )
-{
-	// console.log( 'updateListItem', listItemId, listItemValue );
+var updateListItem = function(listItemId, listItemValue) {
 
-	return new Promise( function( resolve, reject )
-	{
-		ListItems.findOneAndUpdate(
-		{
+	return new Promise( function(resolve, reject) {
+		ListItems.findOneAndUpdate({
 			_id: listItemId
 		},
 		{
-			$set:
-			{
+			$set: {
 				name: listItemValue
 			}
-			
 		},
 		{
 			new: true
 		},
-		function( error, listItem )
-		{
-			if( error )
-			{
-				console.log( error );
-				reject( error );
+		function(error, listItem) {
+			if(error) {
+				console.log(error);
+				reject(error);
 			}
-			else
-			{
-				console.log( listItem );
-				if( listItem )
-				{
-					resolve( { 'updatedListItem': listItem } );
+			else {
+				console.log(listItem);
+				if(listItem){
+					resolve({ 'updatedListItem': listItem });
 				}
-				else
-				{
-					reject( { 'message': 'No listItem found.' } );
+				else {
+					reject({ 'message': 'No listItem found.' });
 				}
 			}
-		} );
-	} );
+		});
+	});
 };
 
-exports.upsertListItem = function( userId, listItem, listItemValue, listItemId )
-{
-	// console.log( 'upsertListItem', listItemId, listItemValue );
+exports.upsertListItem = function(userId, listItem, listItemValue, listItemId) {
 
-	return new Promise( function( resolve, reject )
-	{
-		if( listItemId )
-		{
+	return new Promise(function( resolve, reject) {
+		if(listItemId) {
 			// Update an existing list item.
-			updateListItem( listItemId, listItemValue )
-			.then( function( updatedListItem )
-			{
-				resolve( updatedListItem );
-			} )
-			.catch( function( error )
-			{
-				reject( error );
-			} );
+			updateListItem(listItemId, listItemValue)
+			.then( function(updatedListItem) {
+				resolve( pdatedListItem);
+			})
+			.catch(function(error) {
+				reject(error);
+			});
 		}
-		else
-		{
+		else {
 			// Create a new list item.
-			createNewListItem( userId, listItemValue )
-			.then( function( newListItem )
-			{
-				resolve( newListItem );
-			} )
-			.catch( function( error )
-			{
-				reject( error );
-			} );
+			createNewListItem(userId, listItemValue)
+			.then(function(newListItem) {
+				resolve(newListItem);
+			})
+			.catch(function(error) {
+				reject(error);
+			});
 		}
-	} );
+	});
 };
 
-exports.deleteListItem = function( req, res, next )
-{
+exports.deleteListItem = function(req, res, next) {
 	var listItem      = req.body.listItem;
 	var listItemValue = listItem.name;
 	var listItemId    = listItem._id;
 
-	return new Promise( function( resolve, reject )
-	{
-		ListItems.findOneAndRemove(
-		{
+	return new Promise(function(resolve, reject) {
+		ListItems.findOneAndRemove({
 			'_id': listItemId
 		},
-		function( error )
-		{
-			if( error )
-			{
-				console.log( error );
-				reject( error );
+		function(error) {
+			if(error) {
+				console.log(error);
+				reject(error);
 			}
-			else
-			{
-				resolve(  );
+			else {
+				resolve();
 			}
-		} );
-	} );
+		});
+	});
 };
 
-exports.getList = function( userId )
-{
-	return new Promise( function( resolve, reject )
-	{
-		ListItems.find(
-		{
+exports.getList = function(userId) {
+	return new Promise(function(resolve, reject) {
+		ListItems.find({
 			user: userId
 		},
-		function( error, listItems )
-		{
-			if( error )
-			{
-				console.log( error );
-				reject( error );
+		function(error, listItems) {
+			if(error) {
+				console.log(error);
+				reject(error);
 			}
 
-			resolve( listItems );
-		} );
-	} );
+			resolve(listItems);
+		});
+	});
 };

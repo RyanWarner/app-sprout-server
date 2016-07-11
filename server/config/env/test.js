@@ -1,11 +1,9 @@
 'use strict';
 
-module.exports =
-{
+module.exports = {
 	env: 'test',
 	secureSessionCookie: false,
-	mongo:
-	{
+	mongo: {
 		uri: 'mongodb://localhost/node-sprout-test' // Setup Config (!)
 	}
 };

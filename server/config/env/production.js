@@ -1,7 +1,6 @@
 'use strict';
 
-module.exports =
-{
+module.exports = {
 	env: 'production',
 	secureSessionCookie: true
 };
