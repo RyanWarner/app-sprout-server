@@ -40,8 +40,7 @@ gulp.task('tests', function() {
 	    .src(TESTS, { read: false })
 	    .pipe(mocha({
 
-			env:
-			{
+			env: {
 		   		'NODE_ENV': 'test'
 			}
 	    }));
@@ -53,6 +52,7 @@ gulp.task('serve', function() {
 	nodemon({
 		script: 'server.js'
 	});
+
 	gutil.log('Listening.');
 });
 
