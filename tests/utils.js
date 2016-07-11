@@ -13,7 +13,7 @@ exports.startTestServer = function() {
 	require('../serverSetup')().then( function(app) {
 		var server = http.createServer(app);
 
-		server.on( 'listening', function() {
+		server.on('listening', function() {
 			console.log('test server listening');
 			promise.fulfill({ server: server, app: app });
 		});

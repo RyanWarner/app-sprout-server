@@ -115,7 +115,7 @@ module.exports = function(app) {
 		.then( function(updatedListItem) {
 			res.status(200).send(updatedListItem);
 		} )
-		.catch( function() {
+		.catch( function(error) {
 			res.status(500).send({ 'message': error.message });
 		} );
 	} );

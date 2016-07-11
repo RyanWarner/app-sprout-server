@@ -86,7 +86,7 @@ exports.upsertListItem = function(userId, listItem, listItemValue, listItemId) {
 			// Update an existing list item.
 			updateListItem(listItemId, listItemValue)
 			.then( function(updatedListItem) {
-				resolve( pdatedListItem);
+				resolve(updatedListItem);
 			})
 			.catch(function(error) {
 				reject(error);
