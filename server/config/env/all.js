@@ -14,16 +14,6 @@ module.exports =
 	hostname: process.env.NODE_HOST,
 	sessionSecret: process.env.SESSION_SECRET,
 
-	baseUrl: function(  )
-	{
-		var ss = 'https://';
-		if( process.env.NODE_ENV === 'development' )
-		{
-			ss = 'http://';
-		}
-		return ss + this.hostname;
-	},
-
 	mongo:
 	{
 		uri: 'mongodb://localhost/node-sprout-dev',  // Setup Config (!)
