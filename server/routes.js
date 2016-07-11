@@ -122,32 +122,26 @@ module.exports = function(app) {
 
 	app.put('/api/user/list', authRequired, function(req, res)
 	{
-		list.deleteListItem( req, res )
-		.then( function(  )
-		{
-			res.status( 200 ).send( { 'message': 'Successfully deleted list item.' } );
+		list.deleteListItem(req, res)
+		.then(function() {
+			res.status(200).send({ 'message': 'Successfully deleted list item.' });
 		} )
-		.catch( function( error )
-		{
-			res.status( 500 ).send( { 'message': 'Failed to send list item.' } );
-		} );
-	} );
+		.catch( function(error){
+			res.status(500).send({ 'message': 'Failed to send list item.' });
+		});
+	});
 
-	app.get( '/api/user/list', authRequired, function( req, res, next )
-	{
+	app.get('/api/user/list', authRequired, function(req, res, next) {
 		var userId = req.user._id;
 
-		list.getList( userId )
-		.then( function( listItems )
-		{
-			res.status( 200 ).send( { 'listItems': listItems } );
-		} )
-		.catch( function( error )
-		{
-			res.status( 500 ).send( { 'message': error } );
-		} );
-	} );
+		list.getList(userId)
+		.then( function(listItems) {
+			res.status(200).send({ 'listItems': listItems });
+		})
+		.catch( function(error) {
+			res.status(500).send({ 'message': error });
+		});
+	});
 
-
-	console.log( 'Routes successfully loaded.' );
+	console.log('Routes successfully loaded.');
 };

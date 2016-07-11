@@ -12,8 +12,7 @@ Promise.promisifyAll(User.prototype);
 var config    = require('../config/config.js');
 var validator = require('validator');
 
-exports.register = function(name, email, password)
-{
+exports.register = function(name, email, password) {
 	console.log('UserController register();');
 
 	return new Promise(function(resolve, reject) {
