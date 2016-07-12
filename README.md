@@ -61,4 +61,4 @@ Tests are run through gulp, using [gulp-spawn-mocha](https://github.com/KenPower
 
 ## Coding Style
 
-[squint-style](https://github.com/RyanWarner/squint-style)
+[View ESLint config](https://www.npmjs.com/package/eslint-config-warner)
