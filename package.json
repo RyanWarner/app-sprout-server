@@ -9,6 +9,7 @@
     "errorhandler": "~1.2.2",
     "express": "^4.9.8",
     "express-session": "^1.9.3",
+    "gulp-eslint": "^3.0.1",
     "lodash": "^2.4.1",
     "mongoose": "^4.4.10",
     "mongoose-timestamp": "~0.3.0",
