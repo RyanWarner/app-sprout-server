@@ -21,6 +21,7 @@
     "validator": "^3.22.2"
   },
   "devDependencies": {
+    "body-parser": "^1.15.2",
     "eslint-config-warner": "^1.0.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^0.8.0",
