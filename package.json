@@ -30,7 +30,7 @@
     "istanbul": "~0.3.2",
     "mocha": "^2.2.4",
     "run-sequence": "~1.0.1",
-    "should": "~4.0.4",
+    "should": "^11.1.0",
     "supertest": "^2.0.0"
   }
 }
