@@ -17,7 +17,7 @@
     "passport-twitter": "~1.0.2",
     "request": "^2.45.0",
     "urlsafe-base64": "^1.0.0",
-    "validator": "^3.22.2"
+    "validator": "^5.5.0"
   },
   "devDependencies": {
     "body-parser": "^1.15.2",
