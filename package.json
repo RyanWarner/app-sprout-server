@@ -15,7 +15,7 @@
     "passport": "^0.3.2",
     "passport-local": "~1.0.0",
     "passport-twitter": "~1.0.2",
-    "request": "^2.45.0",
+    "request": "^2.74.0",
     "urlsafe-base64": "^1.0.0",
     "validator": "^5.5.0"
   },
