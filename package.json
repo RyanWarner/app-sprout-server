@@ -20,7 +20,6 @@
     "validator": "^5.5.0"
   },
   "devDependencies": {
-    "body-parser": "^1.15.2",
     "eslint-config-warner": "^1.0.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
